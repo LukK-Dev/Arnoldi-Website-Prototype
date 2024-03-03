@@ -1,11 +1,11 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
+    use arnoldi_website_mvp::app::*;
+    use arnoldi_website_mvp::fileserv::file_and_error_handler;
     use axum::Router;
     use leptos::*;
     use leptos_axum::{generate_route_list, LeptosRoutes};
-    use arnoldi_website_mvp::app::*;
-    use arnoldi_website_mvp::fileserv::file_and_error_handler;
 
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
     // For deployment these variables are:
