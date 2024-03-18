@@ -20,9 +20,10 @@ wasm-bindgen = "=0.2.91"
 thiserror = "1"
 tracing = { version = "0.1", optional = true }
 http = "1"
+leptos_image = { version = "0.2" }
 
 [features]
-hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
+hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate", "leptos_image/hydrate"]
 ssr = [
     "dep:axum",
     "dep:tokio",
@@ -33,6 +34,7 @@ ssr = [
     "leptos_meta/ssr",
     "leptos_router/ssr",
     "dep:tracing",
+    "leptos_image/ssr"
 ]
 
 # Defines a size-optimized profile for the WASM bundle in release mode
