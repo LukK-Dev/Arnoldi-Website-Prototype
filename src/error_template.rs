@@ -1,6 +1,10 @@
 use http::status::StatusCode;
+use icondata as i;
 use leptos::*;
+use leptos_icons::*;
 use thiserror::Error;
+
+use crate::components::navbar::Navbar;
 
 #[derive(Clone, Debug, Error)]
 pub enum AppError {
@@ -52,21 +56,35 @@ pub fn ErrorTemplate(
     }
 
     view! {
-        <h1>{if errors.len() > 1 {"Errors"} else {"Error"}}</h1>
-        <For
-            // a function that returns the items we're iterating over; a signal is fine
-            each= move || {errors.clone().into_iter().enumerate()}
-            // a unique key for each item as a reference
-            key=|(index, _error)| *index
-            // renders each item to a view
-            children=move |error| {
-                let error_string = error.1.to_string();
-                let error_code= error.1.status_code();
-                view! {
-                    <h2>{error_code.to_string()}</h2>
-                    <p>"Error: " {error_string}</p>
-                }
-            }
-        />
+        <div class="flex flex-col h-screen">
+            <Navbar/>
+            <div class="text-white h-screen w-full flex justify-center items-center">
+                <div class="flex flex-col items-center">
+                    <div class="flex mb-4">
+                        <Icon icon=i::BiErrorCircleRegular class="fill-current h-16 w-16 mr-6"/>
+                        <h1 class="font-semibold text-6xl">{if errors.len() > 1 {"Errors"} else {"Error"}}</h1>
+                    </div>
+                    <For
+                        // a function that returns the items we're iterating over; a signal is fine
+                        each= move || {errors.clone().into_iter().enumerate()}
+                        // a unique key for each item as a reference
+                        key=|(index, _error)| *index
+                        // renders each item to a view
+                        children=move |error| {
+                            let error_string = error.1.to_string();
+                            let error_code= error.1.status_code();
+                            view! {
+                                <h2 class="text-2xl">{error_code.to_string()}</h2>
+                                <p class="mb-1">"Error: " {error_string}</p>
+                            }
+                        }
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="fixed inset-0 z-[-1] overflow-hidden">
+            <img src="/school.jpg" class="object-center w-full h-full object-cover pointer-events-none brightness-50 blur-sm scale-105"/>
+        </div>
     }
 }
