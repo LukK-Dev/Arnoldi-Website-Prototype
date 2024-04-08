@@ -22,6 +22,7 @@ tracing = { version = "0.1", optional = true }
 http = "1"
 leptos_icons = "0.3.0"
 icondata = "0.3.0"
+leptos-use = "0.10.6"
 
 [features]
 hydrate = [
@@ -35,10 +36,12 @@ ssr = [
     "dep:tower",
     "dep:tower-http",
     "dep:leptos_axum",
+    "dep:tracing",
     "leptos/ssr",
     "leptos_meta/ssr",
     "leptos_router/ssr",
-    "dep:tracing",
+    "leptos-use/ssr",
+    "leptos-use/axum",
 ]
 
 # Defines a size-optimized profile for the WASM bundle in release mode
