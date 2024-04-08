@@ -2,6 +2,7 @@ use http::status::StatusCode;
 use icondata as i;
 use leptos::*;
 use leptos_icons::*;
+use leptos_meta::{provide_meta_context, Title};
 use thiserror::Error;
 
 use crate::components::navbar::Navbar;
@@ -23,7 +24,7 @@ impl AppError {
 // A basic function to display errors served by the error boundaries.
 // Feel free to do more complicated things here than just displaying the error.
 #[component]
-pub fn ErrorTemplate(
+pub fn Error(
     #[prop(optional)] outside_errors: Option<Errors>,
     #[prop(optional)] errors: Option<RwSignal<Errors>>,
 ) -> impl IntoView {
@@ -55,7 +56,11 @@ pub fn ErrorTemplate(
         }
     }
 
+    provide_meta_context();
+
     view! {
+        <Title text="Arnoldi MVP | Error"/>
+
         <div class="flex flex-col h-screen">
             <Navbar/>
             <div class="text-white h-screen w-full flex justify-center items-center">

@@ -1,10 +1,15 @@
 use leptos::*;
+use leptos_meta::{provide_meta_context, Title};
 
 use crate::components::navbar::Navbar;
 
 #[component]
 pub fn HomePage() -> impl IntoView {
+    provide_meta_context();
+
     view! {
+        <Title text="Arnoldi MVP | Home"/>
+
         <div class="flex flex-col h-screen">
             <Navbar/>
             <div class="text-white h-screen w-full flex flex-col justify-center items-center">
