@@ -31,7 +31,7 @@ fn ControlledComponent() -> impl IntoView {
     let (name, set_name) = create_signal("0".to_string());
 
     view! {
-        <input type="number" class="text-slate-600" max="123456789" step="10"
+        <input type="number" class="text-slate-600" min="1" max="125" step="1"
             // fire an event whenever the input changes
             on:input=move |ev| {
                 // event_target_value is a Leptos helper function
