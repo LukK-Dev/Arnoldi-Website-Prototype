@@ -1,6 +1,6 @@
 use crate::{
     routes::error::{AppError, Error},
-    routes::homepage::HomePage,
+    routes::{homepage::HomePage, grade_calculator::GradeCalculator},
 };
 use leptos::*;
 use leptos_meta::*;
@@ -26,6 +26,7 @@ pub fn App() -> impl IntoView {
             <main>
                 <Routes>
                     <Route path="" view=HomePage/>
+                    <Route path="/notenrechner" view=GradeCalculator/>
                 </Routes>
             </main>
         </Router>

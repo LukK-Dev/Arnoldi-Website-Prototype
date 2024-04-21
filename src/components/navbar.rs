@@ -12,20 +12,20 @@ pub fn Navbar() -> impl IntoView {
                     <Icon icon=i::TbSchool class="fill-current h-8 w-8 mr-2"/>
                     <A href="/" class="font-semibold text-xl tracking-tight">Arnoldi Website MVP</A>
                 </div>
-                <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-                    <div class="text-md lg:flex-grow">
-                        <a href="/vertretungsplan" class="block mt-4 lg:inline-block lg:mt-0 text-white mr-8 group transition duration-300">
+                <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto justify-end">
+                    <div class="text-md">
+                        <A href="/vertretungsplan" class="block mt-4 lg:inline-block lg:mt-0 text-white mr-8 group transition duration-300">
                             Vertretungsplan
                             <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-white rounded"></span>
-                        </a>
-                        <a href="/notenrechner" class="block mt-4 lg:inline-block lg:mt-0 text-white mr-8 group transition duration-300">
+                        </A>
+                        <A href="/notenrechner" class="block mt-4 lg:inline-block lg:mt-0 text-white mr-8 group transition duration-300">
                             Notenrechner
                             <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-white rounded"></span>
-                        </a>
-                        <a href="/neues" class="block mt-4 lg:inline-block lg:mt-0 text-white mr-8 group transition duration-300">
+                        </A>
+                        <A href="/neues" class="block mt-4 lg:inline-block lg:mt-0 text-white mr-8 group transition duration-300">
                             Neues
                             <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-white rounded"></span>
-                        </a>
+                        </A>
                     </div>
                 </div>
             </nav>
