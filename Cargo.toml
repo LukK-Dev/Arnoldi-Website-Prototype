@@ -25,11 +25,7 @@ icondata = "0.3.0"
 leptos-use = "0.10.6"
 
 [features]
-hydrate = [
-    "leptos/hydrate",
-    "leptos_meta/hydrate",
-    "leptos_router/hydrate",
-]
+hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
 ssr = [
     "dep:axum",
     "dep:tokio",
