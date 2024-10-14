@@ -21,8 +21,6 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY . .
 
-RUN cargo install -f wasm-bindgen-cli --version 0.2.92
-
 # Build the app
 RUN cargo leptos build --release -vv
 
@@ -34,9 +32,8 @@ RUN apt-get update -y \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
-# -- NB: update binary name from "leptos_start" to match your app name in Cargo.toml --
 # Copy the server binary to the /app directory
-COPY --from=builder /app/target/release/leptos_start /app/
+COPY --from=builder /app/target/release/arnoldi_website_mvp /app/
 
 # /target/site contains our JS/WASM/CSS, etc.
 COPY --from=builder /app/target/site /app/site
@@ -50,6 +47,5 @@ ENV LEPTOS_SITE_ADDR="0.0.0.0:8080"
 ENV LEPTOS_SITE_ROOT="site"
 EXPOSE 8080
 
-# -- NB: update binary name from "leptos_start" to match your app name in Cargo.toml --
 # Run the server
-CMD ["/app/leptos_start"]
+CMD ["/app/arnoldi_website_mvp"]
