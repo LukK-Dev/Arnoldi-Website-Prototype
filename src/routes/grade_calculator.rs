@@ -10,17 +10,22 @@ pub fn GradeCalculator() -> impl IntoView {
     view! {
         <Title text="Arnoldi MVP | Home"/>
 
-        <div class="flex flex-col h-screen">
+        <div class="flex flex-col h-[50vh]">
             <Navbar/>
-            <div class="text-white h-screen w-full flex flex-col justify-center items-center">
+            <div class="text-white h-[50vh] w-full flex flex-col justify-center items-center">
                 <h1 class="font-semibold lg:text-8xl text-6xl mb-4">Notenrechner</h1>
-                <Rechner/>
             </div>
         </div>
 
         <div class="fixed inset-0 z-[-1] overflow-hidden">
             <img src="/school.jpg" class="object-center w-full h-full object-cover pointer-events-none brightness-50 blur-sm scale-105"/>
         </div>
+
+        <main class="flex justify-center items-center">
+            <div class="w-full h-screen bg-white" style="">
+                <Rechner/>
+            </div>
+        </main>
     }
 }
 
@@ -31,6 +36,8 @@ fn Rechner() -> impl IntoView {
     let (achieved_be, set_achieved_be) = create_signal("0".to_string());
     let (percentage, set_percentage) = create_signal("0".to_string());
     let (grade, set_grade) = create_signal("0".to_string());
+
+    let (mark, set_mark) = create_signal(true);
 
     fn percent(ach_points: f32 , max_points: f32) -> f32{
         let percent = ach_points / max_points * 100.0;
@@ -56,30 +63,45 @@ fn Rechner() -> impl IntoView {
     }
 
     view! {
-        <h2>Zu erreichende Punktzahl:</h2>
-        <input type="number" class="text-slate-600" min="1" max="125" step="1"
-            on:input=move |ev| {
-                set_max_be(event_target_value(&ev));
-                set_percentage((percent(achieved_be.get().parse::<f32>().unwrap(), max_be.get().parse::<f32>().unwrap())).to_string());
-                set_grade(percent_to_grade(percentage.get().parse::<f32>().unwrap()).to_string())
-            }
+        <div class="p-[10px]">
+            <input type="radio" id="css" name="name" value="CSS" checked="checked"
+                on:input=move |ev| {
+                    set_mark(event_target_checked(&ev))
+                }
+                />
+                <label for="css" class="p-[5px] pr-[20px]">Note</label>
+                <input type="radio" id="javascript" name="name" value="JavaScript" 
+                    on:input=move |ev| {
+                        if (event_target_checked(&ev) == true) {
+                            set_mark(false)
+                        }
+                    }
+                />
+                <label for="javascript" class="p-[5px]">Notenpunkte</label>
+            <p>"Name is: " {mark}</p>
 
-            prop:value=max_be
-        />
-        <h2>erreichte Punktzahl:</h2>
-        <input type="number" class="text-slate-600" min="1" max="125" step="1"
-            on:input=move |ev| {
-                set_achieved_be(event_target_value(&ev));
-                set_percentage((percent(achieved_be.get().parse::<f32>().unwrap(), max_be.get().parse::<f32>().unwrap())).to_string());
-                set_grade(percent_to_grade(percentage.get().parse::<f32>().unwrap()).to_string())
-            }
+            <h2>Zu erreichende Punktzahl:</h2>
+            <input type="number" class="text-slate-600" min="1" max="125" step="1"
+                on:input=move |ev| {
+                    set_max_be(event_target_value(&ev));
+                    set_percentage((percent(achieved_be.get().parse::<f32>().unwrap(), max_be.get().parse::<f32>().unwrap())).to_string());
+                    set_grade(percent_to_grade(percentage.get().parse::<f32>().unwrap()).to_string())
+                }
 
-            prop:value=achieved_be
-        />
+                prop:value=max_be
+            />
+            <h2>erreichte Punktzahl:</h2>
+            <input type="number" class="text-slate-600" min="1" max="125" step="1"
+                on:input=move |ev| {
+                    set_achieved_be(event_target_value(&ev));
+                    set_percentage((percent(achieved_be.get().parse::<f32>().unwrap(), max_be.get().parse::<f32>().unwrap())).to_string());
+                    set_grade(percent_to_grade(percentage.get().parse::<f32>().unwrap()).to_string())
+                }
 
+                prop:value=achieved_be
+            />
 
-
-
-        <p>"Du hast Note " {grade} " erreicht mit " {percentage} "%"</p>
+            <p>"Du hast Note " {grade} " erreicht mit " {percentage} "%"</p>
+        </div>
     }
 }
