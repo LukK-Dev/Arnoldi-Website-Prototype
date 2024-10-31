@@ -5,7 +5,7 @@ use leptos_icons::*;
 use leptos_meta::{provide_meta_context, Title};
 use thiserror::Error;
 
-use crate::components::navbar::Navbar;
+use crate::components::{navbar::Navbar, background::Background};
 
 #[derive(Clone, Debug, Error)]
 pub enum AppError {
@@ -80,7 +80,7 @@ pub fn Error(
                             let error_code= error.1.status_code();
                             view! {
                                 <h2 class="text-2xl">{error_code.to_string()}</h2>
-                                <p class="mb-1">"Error: " {error_string}</p>
+                                // <p class="mb-1">"Error: " {error_string}</p>
                             }
                         }
                     />
@@ -88,8 +88,6 @@ pub fn Error(
             </div>
         </div>
 
-        <div class="fixed inset-0 z-[-1] overflow-hidden">
-            <img src="/school.jpg" class="object-center w-full h-full object-cover pointer-events-none brightness-50 blur-sm scale-105"/>
-        </div>
+        <Background />
     }
 }

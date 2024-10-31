@@ -1,7 +1,7 @@
 use leptos::*;
 use leptos_meta::{provide_meta_context, Title};
 
-use crate::components::{footer::Footer, navbar::Navbar};
+use crate::components::{footer::Footer, navbar::Navbar, background::Background};
 
 #[component]
 pub fn HomePage() -> impl IntoView {
@@ -18,9 +18,7 @@ pub fn HomePage() -> impl IntoView {
             </div>
         </div>
 
-        <div class="fixed inset-0 z-[-1] overflow-hidden">
-            <img src="/xArnoldi-2023.jpeg.pagespeed.ic.WVMxwBeclU.webp" class="object-center w-full h-full object-cover pointer-events-none brightness-50 blur-sm scale-105"/>
-        </div>
+        <Background />
 
         <main class="flex justify-center items-center">
             <div class="w-full h-screen bg-white" style="">
