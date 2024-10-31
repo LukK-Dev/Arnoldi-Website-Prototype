@@ -1,7 +1,7 @@
 use leptos::*;
 use leptos_meta::{provide_meta_context, Title};
 
-use crate::components::navbar::Navbar;
+use crate::components::{footer::Footer, navbar::Navbar, background::Background};
 
 #[component]
 pub fn GradeCalculator() -> impl IntoView {
@@ -17,15 +17,15 @@ pub fn GradeCalculator() -> impl IntoView {
             </div>
         </div>
 
-        <div class="fixed inset-0 z-[-1] overflow-hidden">
-            <img src="/school.jpg" class="object-center w-full h-full object-cover pointer-events-none brightness-50 blur-sm scale-105"/>
-        </div>
+        <Background />
 
         <main class="flex justify-center items-center">
             <div class="w-full h-screen bg-white" style="">
                 <Rechner/>
             </div>
         </main>
+
+        <Footer />
     }
 }
 
@@ -44,17 +44,17 @@ fn Rechner() -> impl IntoView {
         return percent.round();
     }
 
-    fn percent_to_grade(pcent: f32) -> i32 {
+    fn percent_to_grade(pcent: f32) -> u32 {
         let mut ach_grade = 0;
-        if pcent > 95.0{
+        if pcent >= 95.0{
             ach_grade = 1;
-        } else if pcent > 80.0{
+        } else if pcent >= 80.0{
             ach_grade = 2;
-        } else if pcent > 65.0{
+        } else if pcent >= 65.0{
             ach_grade = 3;
-        } else if pcent > 50.0{
+        } else if pcent >= 50.0{
             ach_grade = 4;
-        } else if pcent > 25.0{
+        } else if pcent >= 25.0{
             ach_grade = 5;
         } else {
             ach_grade = 6;
@@ -62,11 +62,59 @@ fn Rechner() -> impl IntoView {
         return ach_grade;
     }
 
+    fn percent_to_points(pcent: f32) -> u32 {
+        let mut ach_grade = 0;
+        if pcent >= 95.0{
+            ach_grade = 15;
+        } else if pcent >= 90.0{
+            ach_grade = 14;
+        } else if pcent >= 85.0{
+            ach_grade = 13;
+        } else if pcent >= 80.0{
+            ach_grade = 12;
+        } else if pcent >= 75.0{
+            ach_grade = 11;
+        } else if pcent >= 70.0{
+            ach_grade = 10;
+        } else if pcent >= 65.0{
+            ach_grade = 9;
+        } else if pcent >= 60.0{
+            ach_grade = 8;
+        } else if pcent >= 55.0{
+            ach_grade = 7;
+        } else if pcent >= 50.0{
+            ach_grade = 6;
+        } else if pcent >= 45.0{
+            ach_grade = 5;
+        } else if pcent >= 40.0{
+            ach_grade = 4;
+        } else if pcent >= 33.0{
+            ach_grade = 3;
+        } else if pcent >= 27.0{
+            ach_grade = 2;
+        } else if pcent >= 20.0{
+            ach_grade = 1;
+        } else {
+            ach_grade = 0;
+        }
+        return ach_grade;
+    }
+
+    fn adjust_result(option: bool, percent: f32) -> String{
+        if option{
+            return percent_to_grade(percent).to_string()
+        }
+        else{
+            return percent_to_points(percent).to_string()
+        }
+    }
+
     view! {
         <div class="p-[10px]">
             <input type="radio" id="css" name="name" value="CSS" checked="checked"
                 on:input=move |ev| {
-                    set_mark(event_target_checked(&ev))
+                    set_mark(event_target_checked(&ev));
+                    set_grade(adjust_result(mark.get(), percentage.get().parse::<f32>().unwrap()));
                 }
                 />
                 <label for="css" class="p-[5px] pr-[20px]">Note</label>
@@ -75,17 +123,17 @@ fn Rechner() -> impl IntoView {
                         if (event_target_checked(&ev) == true) {
                             set_mark(false)
                         }
+                        set_grade(adjust_result(mark.get(), percentage.get().parse::<f32>().unwrap()));
                     }
                 />
                 <label for="javascript" class="p-[5px]">Notenpunkte</label>
-            <p>"Name is: " {mark}</p>
 
             <h2>Zu erreichende Punktzahl:</h2>
             <input type="number" class="text-slate-600" min="1" max="125" step="1"
                 on:input=move |ev| {
                     set_max_be(event_target_value(&ev));
                     set_percentage((percent(achieved_be.get().parse::<f32>().unwrap(), max_be.get().parse::<f32>().unwrap())).to_string());
-                    set_grade(percent_to_grade(percentage.get().parse::<f32>().unwrap()).to_string())
+                    set_grade(adjust_result(mark.get(), percentage.get().parse::<f32>().unwrap()));
                 }
 
                 prop:value=max_be
@@ -95,13 +143,13 @@ fn Rechner() -> impl IntoView {
                 on:input=move |ev| {
                     set_achieved_be(event_target_value(&ev));
                     set_percentage((percent(achieved_be.get().parse::<f32>().unwrap(), max_be.get().parse::<f32>().unwrap())).to_string());
-                    set_grade(percent_to_grade(percentage.get().parse::<f32>().unwrap()).to_string())
+                    set_grade(adjust_result(mark.get(), percentage.get().parse::<f32>().unwrap()));
                 }
 
                 prop:value=achieved_be
             />
 
-            <p>"Du hast Note " {grade} " erreicht mit " {percentage} "%"</p>
+            <p>"Es wurde Note " {grade} " erreicht mit " {percentage} "%"</p>
         </div>
     }
 }
